@@ -41,6 +41,7 @@
             this.chkWithCall = new System.Windows.Forms.CheckBox();
             this.lblCanSayan = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
+            this.chkCSharp = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnHandle
@@ -105,6 +106,7 @@
             this.rbUsko.Name = "rbUsko";
             this.rbUsko.Size = new System.Drawing.Size(50, 17);
             this.rbUsko.TabIndex = 8;
+            this.rbUsko.TabStop = true;
             this.rbUsko.Text = "Usko";
             this.rbUsko.UseVisualStyleBackColor = true;
             // 
@@ -124,7 +126,7 @@
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(125, 20);
             this.txtTitle.TabIndex = 10;
-            this.txtTitle.Text = "USKO";
+            this.txtTitle.Text = "Knight OnLine Client";
             this.txtTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // chkWithCall
@@ -154,11 +156,22 @@
             this.lblTime.Size = new System.Drawing.Size(0, 13);
             this.lblTime.TabIndex = 13;
             // 
+            // chkCSharp
+            // 
+            this.chkCSharp.AutoSize = true;
+            this.chkCSharp.Location = new System.Drawing.Point(276, 39);
+            this.chkCSharp.Name = "chkCSharp";
+            this.chkCSharp.Size = new System.Drawing.Size(40, 17);
+            this.chkCSharp.TabIndex = 14;
+            this.chkCSharp.Text = "C#";
+            this.chkCSharp.UseVisualStyleBackColor = true;
+            // 
             // frmGeneral
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(398, 474);
+            this.Controls.Add(this.chkCSharp);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblCanSayan);
             this.Controls.Add(this.btnSave);
@@ -194,6 +207,7 @@
         private System.Windows.Forms.CheckBox chkWithCall;
         private System.Windows.Forms.Label lblCanSayan;
         private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.CheckBox chkCSharp;
     }
 }
 

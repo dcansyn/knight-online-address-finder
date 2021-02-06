@@ -30,16 +30,11 @@ namespace KO
             btnHandle.Enabled = false;
             btnHandle.Text = "Wait";
             lblTime.Text = "";
+            Application.DoEvents();
 
             // Search
-            var game = new Helpers.GameHelper(txtTitle.Text, rbUsko.Checked ? Enums.PlatformType.USKO : Enums.PlatformType.STEAM);
-
-            if (game.Handle == IntPtr.Zero)
-            {
-                MessageBox.Show("Please open the game.", "CS", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
+            var platform = rbUsko.Checked ? Enums.PlatformType.USKO : Enums.PlatformType.STEAM;
+            var game = new Helpers.GameHelper(txtTitle.Text, platform);
             var addresses = game.SearchAddresses();
             lstvAddresses.Items.Clear();
             foreach (var address in addresses)
@@ -57,14 +52,13 @@ namespace KO
             var save = new Helpers.SaveHelper("Pointer", $@"{AppDomain.CurrentDomain.BaseDirectory}{DateTime.Now.ToString("dd-MM-yyyy hh.mm")}.ini");
             foreach (ListViewItem item in lstvAddresses.Items)
             {
-                if (chkWithCall.Checked)
-                {
-                    save.Write(item.SubItems[0].Text, $"{item.SubItems[1].Text}-{item.SubItems[2].Text}");
-                }
-                else
-                {
-                    save.Write(item.SubItems[0].Text, $"&H{item.SubItems[1].Text}");
-                }
+                var name = item.SubItems[0].Text;
+                var value = $"{item.SubItems[1].Text}{(chkWithCall.Checked ? $"-{item.SubItems[2].Text}" : "")}";
+
+                name = chkCSharp.Checked ? $"static public int {name}" : name;
+                value = chkCSharp.Checked ? $"0x{value};" : $"&H{value}";
+
+                save.Write(name, value);
             }
         }
     }
