@@ -26,19 +26,6 @@ namespace KO.UI
         public FormFinder() { InitializeComponent(); }
         private void ButtonAddAddress_Click(object sender, EventArgs e)
         {
-            // Address Type
-            var addressTypes = AddressType.Pointer.List().Select(x => $"{Environment.NewLine}{x.Value} - {x.DisplayName}");
-            var addressInput = MessageHelper.Input(
-                "Adres Tipi",
-                $"Lütfen adres tipini giriniz..{Environment.NewLine}{string.Join(Environment.NewLine, addressTypes)}",
-                "0");
-
-            if (!Enum.TryParse(addressInput, out _addressType))
-            {
-                MessageHelper.Send("Geçersiz adres tipi.");
-                return;
-            }
-
             ListViewAddresses.Items.Clear();
             ListViewAddresses.Columns.Clear();
             ListViewOperationCodes.Items.Clear();
@@ -48,54 +35,13 @@ namespace KO.UI
 
             foreach (var item in Client.Games)
             {
-                var addressHex = "";
-                var baseAddressHex = "";
-#if DEBUG
-                switch (item.Title)
-                {
-                    case "2345":
-                        addressHex = "49F530";
-                        break;
-                    case "210208":
-                        addressHex = "49E470";
-                        break;
-                    case "2108":
-                        addressHex = "4BD350";
-                        break;
-                }
-
-                //switch (item.Title)
-                //{
-                //    case "2345":
-                //        addressHex = "F2A39C";
-                //        baseAddressHex = "F2A39C";
-                //        break;
-                //    case "210208":
-                //        addressHex = "E84C1C";
-                //        baseAddressHex = "E84C1C";
-                //        break;
-                //    case "2108":
-                //        addressHex = "10131C0";
-                //        baseAddressHex = "10131C0";
-                //        break;
-                //}
-#else
-                addressHex = MessageHelper.Input(App.ApplicationName, 
+                var addressHex = MessageHelper.Input(App.ApplicationName,
                     $"Lütfen {item.Title} için adres hex değerini giriniz." +
-                    $"{Environment.NewLine}" +
-                    (addresType == AddressType.Offset ? "C0D" : "Örn:C0D0C06C"), "");
-#endif
+                    $"{Environment.NewLine}{Environment.NewLine}" +
+                    $"Örn:C0D0C06C");
                 if (string.IsNullOrEmpty(addressHex)) continue;
 
-                if (_addressType == AddressType.Offset)
-                {
-                    baseAddressHex = MessageHelper.Input(App.ApplicationName,
-                       $"Lütfen {item.Title} için üst pointer bilgisinin hex değerini giriniz." +
-                       $"{Environment.NewLine}" +
-                       $"Örn:C0D0C06C", "");
-                }
-
-                Client.Codes.Add(new OperationCode(item, addressHex, item.Handle, baseAddressHex, _addressType));
+                Client.Codes.Add(new OperationCode(item, addressHex, item.Handle));
 
                 ListViewAddresses.Columns.Add(new ColumnHeader()
                 {
@@ -117,6 +63,7 @@ namespace KO.UI
 
             ListViewOperationCodes.Items.Clear();
             ButtonOperationCodeFind.Enabled = false;
+            ButtonOperationCodeCompare.Enabled = false;
             ButtonOperationCodeFind.Text = "Aranıyor..";
 
             var rows = !string.IsNullOrEmpty(TextBoxCompareRows.Text) ? TextBoxCompareRows.Text
@@ -152,18 +99,9 @@ namespace KO.UI
 
             LabelCount.Text = ListViewOperationCodes.Items.Count.ToString();
 
-
             ButtonOperationCodeFind.Enabled = true;
+            ButtonOperationCodeCompare.Enabled = true;
             ButtonOperationCodeFind.Text = "Bul";
-        }
-
-        private void FormFinder_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            Hide();
-
-            var form = new FormMain();
-            form.Show();
         }
 
         private void ButtonOperationCodeCompare_Click(object sender, EventArgs e)
@@ -174,9 +112,18 @@ namespace KO.UI
                 return;
             }
 
+            ButtonOperationCodeFind.Enabled = false;
+            ButtonOperationCodeCompare.Enabled = false;
+            ButtonOperationCodeCompare.Text = "Aranıyor..";
+
             foreach (ListViewItem item in ListViewOperationCodes.Items)
+            {
+                Application.DoEvents();
+
                 foreach (var game in Client.Games)
                 {
+                    Application.DoEvents();
+
                     var address = new Address(true, App.ApplicationName, item.Text, type: _addressType);
                     var result = address.CollectAddress(game);
                     if (result.Value < 0x400000)
@@ -191,14 +138,18 @@ namespace KO.UI
                         item.Remove();
                         break;
                     }
-
-                    Application.DoEvents();
                 }
+            }
+
+            ButtonOperationCodeFind.Enabled = true;
+            ButtonOperationCodeCompare.Enabled = true;
+            ButtonOperationCodeCompare.Text = "Karşılaştır";
+            LabelCount.Text = ListViewOperationCodes.Items.Count.ToString();
         }
 
-        private void ListViewOperationCodes_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void ListViewOperationCodes_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (ListViewOperationCodes.FocusedItem != null && ModifierKeys.HasFlag(Keys.Control))
+            if(e.KeyChar == (char)Keys.LControlKey && ListViewOperationCodes.FocusedItem != null)
                 ListViewOperationCodes.FocusedItem.Remove();
         }
     }

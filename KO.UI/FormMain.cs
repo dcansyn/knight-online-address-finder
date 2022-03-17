@@ -150,11 +150,6 @@ namespace KO.UI
             });
         }
 
-        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
         private void MenuCloseAll_Click(object sender, EventArgs e)
         {
             var confirm = MessageHelper.Send("Are you sure to close all game?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -170,6 +165,11 @@ namespace KO.UI
 
             if (Height < 577)
                 Height = 577;
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace KO.Core.Helpers.Message
             return MessageBox.Show(text, App.ApplicationName, button, icon) == DialogResult.Yes;
         }
 
-        public static string Input(string title, string message, string initialValue)
+        public static string Input(string title, string message, string initialValue = "")
         {
             return Interaction.InputBox(message, title, initialValue);
         }
