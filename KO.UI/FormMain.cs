@@ -173,6 +173,3 @@ namespace KO.UI
         }
     }
 }
-/*
-    (0x0040F481 + "7A531E00".ConvertHexToDword().ConvertHexToInt() + 5).ConvertIntToHex()
-*/

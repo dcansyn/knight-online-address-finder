@@ -13,5 +13,6 @@ namespace KO.Core.Consts
         public const string GameName = "Knight OnLine Client";
         public const string GameFileName = "KnightOnLine.exe";
         public const string GameProcessName = "KnightOnLine";
+        public const int OperationCodeMaxLength = 30;
     }
 }

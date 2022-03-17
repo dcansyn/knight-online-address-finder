@@ -11,26 +11,29 @@ namespace KO.Provider.Domains
     {
         public string Hex { get; protected set; }
         public string[] ReverseBlocks { get; protected set; }
-        public string FirstBlock => ReverseBlocks.Length > 0 ? ReverseBlocks[0] : "";
-        public int Start { get; protected set; }
         public string OperationCode { get; protected set; }
+        public int CallValue { get; protected set; }
+        public int[] Rows { get; set; }
 
-        public OperationCodeBlock(string hex, int start)
+        public OperationCodeBlock(string hex, int callValue, int[] rows)
         {
             Hex = hex;
-            Start = start;
             ReverseBlocks = Hex.ConvertHexToBlocks();
             OperationCode = hex;
+            CallValue = callValue;
+            Rows = rows;
+
+            Code();
         }
 
-        public string Code(int[] counts)
+        public string Code()
         {
             var result = new List<string>();
-            var max = counts.Max();
-            
-            if (max >= ReverseBlocks.Length) throw new ArgumentOutOfRangeException();
-            for(int i = 0; i <= max; i++)
-                result.Add(counts.Contains(i) ? ReverseBlocks[i] : "XX");
+            var max = Rows.Max();
+
+            if (max >= ReverseBlocks.Length) return null;
+            for (int i = 0; i <= max; i++)
+                result.Add(Rows.Contains(i) ? ReverseBlocks[i] : "XX");
 
             result.Reverse();
             OperationCode = string.Join("", result);

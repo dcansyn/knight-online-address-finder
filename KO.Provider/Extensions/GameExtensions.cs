@@ -8,6 +8,11 @@ namespace KO.Provider.Extensions
 {
     public static class GameExtensions
     {
+        public static int ReadCallHexAddress(this IntPtr handle, string operationCode, int start)
+        {
+            return handle.ReadByteArray(start, 4).ConvertByteArrayToHex().ConvertHexToDword().ConvertHexToInt();
+        }
+
         public static int ReadAddress(this IntPtr handle, string operationCode, int start, int length)
         {
             if (string.IsNullOrEmpty(operationCode) || start <= 0 || length <= 0)

@@ -1,7 +1,9 @@
 ﻿using KO.Core.Consts;
 using KO.Core.Extensions;
+using KO.Core.Helpers.Message;
 using KO.Provider;
 using KO.Provider.Domains;
+using KO.Provider.Enums.Address;
 using KO.Provider.Extensions;
 using KO.Provider.Helpers;
 using Microsoft.VisualBasic;
@@ -19,10 +21,24 @@ namespace KO.UI
 {
     public partial class FormFinder : Form
     {
-        public FormFinder() { InitializeComponent(); }
+        public AddressType _addressType = AddressType.Pointer;
 
+        public FormFinder() { InitializeComponent(); }
         private void ButtonAddAddress_Click(object sender, EventArgs e)
         {
+            // Address Type
+            var addressTypes = AddressType.Pointer.List().Select(x => $"{Environment.NewLine}{x.Value} - {x.DisplayName}");
+            var addressInput = MessageHelper.Input(
+                "Adres Tipi",
+                $"Lütfen adres tipini giriniz..{Environment.NewLine}{string.Join(Environment.NewLine, addressTypes)}",
+                "0");
+
+            if (!Enum.TryParse(addressInput, out _addressType))
+            {
+                MessageHelper.Send("Geçersiz adres tipi.");
+                return;
+            }
+
             ListViewAddresses.Items.Clear();
             ListViewAddresses.Columns.Clear();
             ListViewOperationCodes.Items.Clear();
@@ -32,26 +48,54 @@ namespace KO.UI
 
             foreach (var item in Client.Games)
             {
+                var addressHex = "";
+                var baseAddressHex = "";
 #if DEBUG
-                var value = "";
                 switch (item.Title)
                 {
                     case "2345":
-                        value = "F2A39C";
+                        addressHex = "49F530";
                         break;
                     case "210208":
-                        value = "E84C1C";
+                        addressHex = "49E470";
                         break;
                     case "2108":
-                        value = "10131C0";
+                        addressHex = "4BD350";
                         break;
                 }
-                if (string.IsNullOrEmpty(value)) continue;
+
+                //switch (item.Title)
+                //{
+                //    case "2345":
+                //        addressHex = "F2A39C";
+                //        baseAddressHex = "F2A39C";
+                //        break;
+                //    case "210208":
+                //        addressHex = "E84C1C";
+                //        baseAddressHex = "E84C1C";
+                //        break;
+                //    case "2108":
+                //        addressHex = "10131C0";
+                //        baseAddressHex = "10131C0";
+                //        break;
+                //}
 #else
-                var value = Interaction.InputBox($"{item.Title}", $"Please enter the address hex value.", "");
-                if (string.IsNullOrEmpty(value)) continue;
+                addressHex = MessageHelper.Input(App.ApplicationName, 
+                    $"Lütfen {item.Title} için adres hex değerini giriniz." +
+                    $"{Environment.NewLine}" +
+                    (addresType == AddressType.Offset ? "C0D" : "Örn:C0D0C06C"), "");
 #endif
-                Client.Codes.Add(new OperationCode(item, value.ConvertHexToDword(), item.Handle));
+                if (string.IsNullOrEmpty(addressHex)) continue;
+
+                if (_addressType == AddressType.Offset)
+                {
+                    baseAddressHex = MessageHelper.Input(App.ApplicationName,
+                       $"Lütfen {item.Title} için üst pointer bilgisinin hex değerini giriniz." +
+                       $"{Environment.NewLine}" +
+                       $"Örn:C0D0C06C", "");
+                }
+
+                Client.Codes.Add(new OperationCode(item, addressHex, item.Handle, baseAddressHex, _addressType));
 
                 ListViewAddresses.Columns.Add(new ColumnHeader()
                 {
@@ -60,7 +104,7 @@ namespace KO.UI
                 });
             }
 
-            ListViewAddresses.Items.Add(new ListViewItem(Client.Codes.Select(x => x.Dword).ToArray()));
+            ListViewAddresses.Items.Add(new ListViewItem(Client.Codes.Select(x => x.Hex).ToArray()));
         }
 
         private void ButtonOperationCodeFind_Click(object sender, EventArgs e)
@@ -71,17 +115,18 @@ namespace KO.UI
                 return;
             }
 
+            ListViewOperationCodes.Items.Clear();
             ButtonOperationCodeFind.Enabled = false;
             ButtonOperationCodeFind.Text = "Aranıyor..";
 
-            var rows = !string.IsNullOrEmpty(TextBoxCompareRow.Text) ? TextBoxCompareRow.Text
+            var rows = !string.IsNullOrEmpty(TextBoxCompareRows.Text) ? TextBoxCompareRows.Text
                 .Split(',')
                 .Where(x => int.TryParse(x, out int index))
                 .Select(x => Convert.ToInt32(x))
-                .ToArray() : new[] { 1 };
+                .ToArray() : new[] { 0, 1 };
 
-            OperationCodeHelper.FindOperationCode();
-            OperationCodeHelper.UpdateOperationCode(rows);
+            OperationCodeHelper.FindOperationCode(rows);
+            OperationCodeHelper.UpdateOperationCode();
 
             var maxBlockLength = Client.Codes.Where(x => x.Blocks != null).Max(x => x.Blocks.Count);
             for (int i = 0; i < Client.Codes.Count; i++)
@@ -98,20 +143,6 @@ namespace KO.UI
                     var block = j < code.Blocks.Count ? code.Blocks[j] : null;
                     if (block == null)
                         continue;
-
-                    //var insert = true;
-                    //foreach (var game in Client.Games)
-                    //{
-                    //    var address = new Address(true, App.ApplicationName, block.OperationCode);
-                    //    var result = address.CollectAddress(game);
-                    //    if (result.Value < 0x400000)
-                    //    {
-                    //        insert = false;
-                    //        break;
-                    //    }
-                    //}
-                    //
-                    //if (!insert) continue;
 
                     ListViewOperationCodes.Items.Add(block.OperationCode);
 
@@ -146,7 +177,7 @@ namespace KO.UI
             foreach (ListViewItem item in ListViewOperationCodes.Items)
                 foreach (var game in Client.Games)
                 {
-                    var address = new Address(true, App.ApplicationName, item.Text);
+                    var address = new Address(true, App.ApplicationName, item.Text, type: _addressType);
                     var result = address.CollectAddress(game);
                     if (result.Value < 0x400000)
                     {
@@ -167,7 +198,7 @@ namespace KO.UI
 
         private void ListViewOperationCodes_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if ( ListViewOperationCodes.FocusedItem != null)
+            if (ListViewOperationCodes.FocusedItem != null && ModifierKeys.HasFlag(Keys.Control))
                 ListViewOperationCodes.FocusedItem.Remove();
         }
     }

@@ -73,7 +73,7 @@
             this.GroupBoxFinder.ForeColor = System.Drawing.Color.Black;
             this.GroupBoxFinder.Location = new System.Drawing.Point(262, 27);
             this.GroupBoxFinder.Name = "GroupBoxFinder";
-            this.GroupBoxFinder.Size = new System.Drawing.Size(496, 483);
+            this.GroupBoxFinder.Size = new System.Drawing.Size(779, 483);
             this.GroupBoxFinder.TabIndex = 8;
             this.GroupBoxFinder.TabStop = false;
             this.GroupBoxFinder.Text = "Adresler";
@@ -81,7 +81,7 @@
             // ButtonSaveAddress
             // 
             this.ButtonSaveAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonSaveAddress.Location = new System.Drawing.Point(414, 451);
+            this.ButtonSaveAddress.Location = new System.Drawing.Point(697, 451);
             this.ButtonSaveAddress.Name = "ButtonSaveAddress";
             this.ButtonSaveAddress.Size = new System.Drawing.Size(76, 26);
             this.ButtonSaveAddress.TabIndex = 24;
@@ -91,7 +91,7 @@
             // ButtonClearAddresses
             // 
             this.ButtonClearAddresses.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonClearAddresses.Location = new System.Drawing.Point(464, 20);
+            this.ButtonClearAddresses.Location = new System.Drawing.Point(747, 20);
             this.ButtonClearAddresses.Name = "ButtonClearAddresses";
             this.ButtonClearAddresses.Size = new System.Drawing.Size(25, 25);
             this.ButtonClearAddresses.TabIndex = 14;
@@ -125,7 +125,7 @@
             this.ListViewAddresses.Location = new System.Drawing.Point(6, 19);
             this.ListViewAddresses.Name = "ListViewAddresses";
             this.ListViewAddresses.ShowItemToolTips = true;
-            this.ListViewAddresses.Size = new System.Drawing.Size(484, 426);
+            this.ListViewAddresses.Size = new System.Drawing.Size(767, 426);
             this.ListViewAddresses.TabIndex = 10;
             this.ListViewAddresses.UseCompatibleStateImageBehavior = false;
             this.ListViewAddresses.View = System.Windows.Forms.View.Details;
@@ -310,7 +310,7 @@
             // 
             this.LabelInformation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelInformation.AutoSize = true;
-            this.LabelInformation.Location = new System.Drawing.Point(673, 513);
+            this.LabelInformation.Location = new System.Drawing.Point(956, 513);
             this.LabelInformation.Name = "LabelInformation";
             this.LabelInformation.Size = new System.Drawing.Size(85, 13);
             this.LabelInformation.TabIndex = 10;
@@ -324,7 +324,7 @@
             this.MenuCloseAll});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(767, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1050, 24);
             this.menuStrip1.TabIndex = 11;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -346,7 +346,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(767, 538);
+            this.ClientSize = new System.Drawing.Size(1050, 538);
             this.Controls.Add(this.LabelInformation);
             this.Controls.Add(this.GroupBoxHelper);
             this.Controls.Add(this.GroupBoxFinder);

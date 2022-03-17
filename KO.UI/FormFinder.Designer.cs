@@ -34,7 +34,7 @@
             this.ListViewAddresses = new System.Windows.Forms.ListView();
             this.GroupBoxOperationCodes = new System.Windows.Forms.GroupBox();
             this.ButtonOperationCodeCompare = new System.Windows.Forms.Button();
-            this.TextBoxCompareRow = new System.Windows.Forms.TextBox();
+            this.TextBoxCompareRows = new System.Windows.Forms.TextBox();
             this.ButtonOperationCodeFind = new System.Windows.Forms.Button();
             this.LabelCount = new System.Windows.Forms.Label();
             this.ListViewOperationCodes = new System.Windows.Forms.ListView();
@@ -51,7 +51,7 @@
             this.GroupBoxOpCodeAddresses.Controls.Add(this.ListViewAddresses);
             this.GroupBoxOpCodeAddresses.Location = new System.Drawing.Point(12, 12);
             this.GroupBoxOpCodeAddresses.Name = "GroupBoxOpCodeAddresses";
-            this.GroupBoxOpCodeAddresses.Size = new System.Drawing.Size(702, 106);
+            this.GroupBoxOpCodeAddresses.Size = new System.Drawing.Size(357, 106);
             this.GroupBoxOpCodeAddresses.TabIndex = 32;
             this.GroupBoxOpCodeAddresses.TabStop = false;
             this.GroupBoxOpCodeAddresses.Text = "Adresler";
@@ -78,7 +78,7 @@
             this.ListViewAddresses.Location = new System.Drawing.Point(100, 19);
             this.ListViewAddresses.Name = "ListViewAddresses";
             this.ListViewAddresses.ShowItemToolTips = true;
-            this.ListViewAddresses.Size = new System.Drawing.Size(596, 80);
+            this.ListViewAddresses.Size = new System.Drawing.Size(251, 80);
             this.ListViewAddresses.TabIndex = 31;
             this.ListViewAddresses.UseCompatibleStateImageBehavior = false;
             this.ListViewAddresses.View = System.Windows.Forms.View.Details;
@@ -89,13 +89,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBoxOperationCodes.Controls.Add(this.ButtonOperationCodeCompare);
-            this.GroupBoxOperationCodes.Controls.Add(this.TextBoxCompareRow);
+            this.GroupBoxOperationCodes.Controls.Add(this.TextBoxCompareRows);
             this.GroupBoxOperationCodes.Controls.Add(this.ButtonOperationCodeFind);
             this.GroupBoxOperationCodes.Controls.Add(this.LabelCount);
             this.GroupBoxOperationCodes.Controls.Add(this.ListViewOperationCodes);
             this.GroupBoxOperationCodes.Location = new System.Drawing.Point(12, 124);
             this.GroupBoxOperationCodes.Name = "GroupBoxOperationCodes";
-            this.GroupBoxOperationCodes.Size = new System.Drawing.Size(702, 421);
+            this.GroupBoxOperationCodes.Size = new System.Drawing.Size(357, 421);
             this.GroupBoxOperationCodes.TabIndex = 33;
             this.GroupBoxOperationCodes.TabStop = false;
             this.GroupBoxOperationCodes.Text = "Operasyon Kodları";
@@ -103,7 +103,7 @@
             // ButtonOperationCodeCompare
             // 
             this.ButtonOperationCodeCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonOperationCodeCompare.Location = new System.Drawing.Point(608, 19);
+            this.ButtonOperationCodeCompare.Location = new System.Drawing.Point(263, 19);
             this.ButtonOperationCodeCompare.Name = "ButtonOperationCodeCompare";
             this.ButtonOperationCodeCompare.Size = new System.Drawing.Size(88, 25);
             this.ButtonOperationCodeCompare.TabIndex = 41;
@@ -111,15 +111,15 @@
             this.ButtonOperationCodeCompare.UseVisualStyleBackColor = true;
             this.ButtonOperationCodeCompare.Click += new System.EventHandler(this.ButtonOperationCodeCompare_Click);
             // 
-            // TextBoxCompareRow
+            // TextBoxCompareRows
             // 
-            this.TextBoxCompareRow.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBoxCompareRows.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxCompareRow.Location = new System.Drawing.Point(100, 22);
-            this.TextBoxCompareRow.Name = "TextBoxCompareRow";
-            this.TextBoxCompareRow.Size = new System.Drawing.Size(502, 20);
-            this.TextBoxCompareRow.TabIndex = 40;
-            this.TextBoxCompareRow.Text = "0";
+            this.TextBoxCompareRows.Location = new System.Drawing.Point(100, 22);
+            this.TextBoxCompareRows.Name = "TextBoxCompareRows";
+            this.TextBoxCompareRows.Size = new System.Drawing.Size(157, 20);
+            this.TextBoxCompareRows.TabIndex = 40;
+            this.TextBoxCompareRows.Text = "0,1,2,3,4";
             // 
             // ButtonOperationCodeFind
             // 
@@ -135,7 +135,7 @@
             // 
             this.LabelCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelCount.BackColor = System.Drawing.Color.Transparent;
-            this.LabelCount.Location = new System.Drawing.Point(-130, 0);
+            this.LabelCount.Location = new System.Drawing.Point(-475, 0);
             this.LabelCount.Name = "LabelCount";
             this.LabelCount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.LabelCount.Size = new System.Drawing.Size(826, 16);
@@ -157,7 +157,7 @@
             this.ListViewOperationCodes.Location = new System.Drawing.Point(6, 50);
             this.ListViewOperationCodes.Name = "ListViewOperationCodes";
             this.ListViewOperationCodes.ShowItemToolTips = true;
-            this.ListViewOperationCodes.Size = new System.Drawing.Size(690, 365);
+            this.ListViewOperationCodes.Size = new System.Drawing.Size(345, 365);
             this.ListViewOperationCodes.TabIndex = 35;
             this.ListViewOperationCodes.UseCompatibleStateImageBehavior = false;
             this.ListViewOperationCodes.View = System.Windows.Forms.View.Details;
@@ -166,13 +166,13 @@
             // ColumnOperationCode
             // 
             this.ColumnOperationCode.Text = "Operasyon Kodu";
-            this.ColumnOperationCode.Width = 974;
+            this.ColumnOperationCode.Width = 310;
             // 
             // FormFinder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(726, 557);
+            this.ClientSize = new System.Drawing.Size(381, 557);
             this.Controls.Add(this.GroupBoxOperationCodes);
             this.Controls.Add(this.GroupBoxOpCodeAddresses);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -192,7 +192,7 @@
         internal System.Windows.Forms.ListView ListViewAddresses;
         internal System.Windows.Forms.Button ButtonAddAddress;
         private System.Windows.Forms.GroupBox GroupBoxOperationCodes;
-        private System.Windows.Forms.TextBox TextBoxCompareRow;
+        private System.Windows.Forms.TextBox TextBoxCompareRows;
         internal System.Windows.Forms.Button ButtonOperationCodeFind;
         private System.Windows.Forms.Label LabelCount;
         internal System.Windows.Forms.ListView ListViewOperationCodes;
