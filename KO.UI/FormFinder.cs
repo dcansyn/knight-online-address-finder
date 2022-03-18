@@ -91,7 +91,8 @@ namespace KO.UI
                     if (block == null)
                         continue;
 
-                    ListViewOperationCodes.Items.Add(block.OperationCode);
+                    if(!ListViewOperationCodes.Items.Cast<ListViewItem>().Any(x => x.Text == block.OperationCode))
+                        ListViewOperationCodes.Items.Add(block.OperationCode);
 
                     Application.DoEvents();
                 }

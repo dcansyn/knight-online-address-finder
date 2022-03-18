@@ -10,7 +10,7 @@ namespace KO.Provider
 
         public readonly static List<Address> Addresses = new List<Address>()
         {
-            new Address(true, "KO_PTR_CHR", "A1QQ8988QQ8B0D"),
+            new Address(true, "KO_PTR_CHR", "007516A1"),
         };
     }
 }
