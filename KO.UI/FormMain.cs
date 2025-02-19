@@ -68,6 +68,11 @@ namespace KO.UI
 
         private void ButtonHelperFind_Click(object sender, EventArgs e)
         {
+            TextBoxHex.Text = TextBoxHex.Text
+                .Replace(Environment.NewLine, "")
+                .Replace(" ", "")
+                .ToUpper(); 
+
             var baseAddressHex = !string.IsNullOrEmpty(TextBoxBasePointer.Text) ? TextBoxBasePointer.Text.ConvertHexToDword() : "";
             var start = int.Parse(TextBoxStartIndex.Text, NumberStyles.HexNumber) + 1;
             var length = int.Parse(TextBoxSearchLength.Text, NumberStyles.HexNumber);
@@ -98,14 +103,6 @@ namespace KO.UI
                     TextBoxResult.Text = result2.Result;
                     break;
             }
-        }
-
-        private void TextBoxHex_TextChanged(object sender, EventArgs e)
-        {
-            TextBoxHex.Text = TextBoxHex.Text
-                .Replace(Environment.NewLine, "")
-                .Replace(" ", "")
-                .ToUpper();
         }
 
         private void ButtonHelperFindNext_Click(object sender, EventArgs e)

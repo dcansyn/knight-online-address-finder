@@ -154,7 +154,7 @@ namespace KO.UI
 
             if (!_game.IsAvailable) return;
 
-            if (_game.IsStarted && !_game.IsThreadAction && !_game.IsCompleted && MemoryHelper.CheckProcessByTitle(App.GameName))
+            if (_game.IsStarted && !_game.IsThreadAction && !_game.IsCompleted && MemoryHelper.CheckProcessByName(_game.Title))
             {
                 LabelInformation.Text = "Bypass işlemi başlatıldı..";
                 _game.Bypass();

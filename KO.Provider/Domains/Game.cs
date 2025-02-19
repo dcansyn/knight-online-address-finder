@@ -45,6 +45,28 @@ namespace KO.Provider.Domains
             ActionTime = DateTime.Now;
         }
 
+        public void ChangeFolderName()
+        {
+            var info = new FileInfo(FilePath);
+            if (info.Directory.FullName != null)
+            {
+                var xignCode = new DirectoryInfo(Path.Combine(info.Directory.FullName, "XIGNCODE"));
+                if (xignCode.Exists)
+                    Directory.Move(xignCode.FullName, xignCode.FullName + "1");
+            }
+        }
+
+        public void RestoreFolderName()
+        {
+            var info = new FileInfo(FilePath);
+            if (info.Directory.FullName != null)
+            {
+                var xignCode = new DirectoryInfo(Path.Combine(info.Directory.FullName, "XIGNCODE1"));
+                if (xignCode.Exists)
+                    Directory.Move(xignCode.FullName, Path.Combine(info.Directory.FullName, "XIGNCODE"));
+            }
+        }
+
         public void ChangeFileName()
         {
             var info = new FileInfo(FilePath);
@@ -66,6 +88,9 @@ namespace KO.Provider.Domains
             {
                 ChangeFileName();
 
+                if (PlatformType == PlatformType.Global)
+                    ChangeFolderName();
+
                 var info = new FileInfo(FilePath);
                 GameProcess = Process.Start(new ProcessStartInfo(info.Name)
                 {
@@ -84,11 +109,16 @@ namespace KO.Provider.Domains
         {
             Task.Run(() =>
             {
-                MemoryHelper.KillByName("xxd-0", true);
-                MemoryHelper.CloseMutant(GameProcess);
+                if (PlatformType == PlatformType.Japan)
+                    MemoryHelper.CloseMutant(GameProcess);
+
                 WinApi.ShowWindow(GameProcess.MainWindowHandle, 6);
                 WinApi.SetWindowText(GameProcess.MainWindowHandle, Title);
                 MemoryHelper.ThreadSuspend(GameProcess);
+
+                if (PlatformType == PlatformType.Global)
+                    RestoreFolderName();
+
                 IsCompleted = true;
             });
 

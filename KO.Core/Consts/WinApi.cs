@@ -190,5 +190,9 @@ namespace KO.Core.Consts
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
         public static extern IntPtr VirtualAllocEx(IntPtr hpProcess, IntPtr lpAddress, int dwSize, int flAllocationType, int flProtect);
+        [DllImport("ntdll.dll")]
+        public static extern void NtResumeProcess(IntPtr processHandle);
+        [DllImport("ntdll.dll")]
+        public static extern void NtSuspendProcess(IntPtr processHandle);
     }
 }

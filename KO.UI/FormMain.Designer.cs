@@ -278,7 +278,6 @@
             this.TextBoxHex.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.TextBoxHex.Size = new System.Drawing.Size(232, 178);
             this.TextBoxHex.TabIndex = 3;
-            this.TextBoxHex.TextChanged += new System.EventHandler(this.TextBoxHex_TextChanged);
             this.TextBoxHex.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxHex_MouseDoubleClick);
             // 
             // LabelHex
